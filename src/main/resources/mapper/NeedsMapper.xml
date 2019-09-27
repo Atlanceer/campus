@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="atlan.ceer.mapper.NeedsMapper">
+  <resultMap id="BaseResultMap" type="atlan.ceer.pojo.Needs">
+    <id column="needsid" jdbcType="VARCHAR" property="needsid" />
+    <result column="userid" jdbcType="VARCHAR" property="userid" />
+    <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="goodsname" jdbcType="VARCHAR" property="goodsname" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="tip" jdbcType="DOUBLE" property="tip" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="browse" jdbcType="INTEGER" property="browse" />
+    <result column="lever" jdbcType="INTEGER" property="lever" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="collect" jdbcType="INTEGER" property="collect" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="atlan.ceer.pojo.Needs">
+    <result column="information" jdbcType="LONGVARCHAR" property="information" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    needsid, userid, category, goodsname, price, tip, location, createtime, browse, lever, 
+    status, collect
+  </sql>
+  <sql id="Blob_Column_List">
+    information
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="atlan.ceer.pojo.NeedsExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from needs
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="atlan.ceer.pojo.NeedsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from needs
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from needs
+    where needsid = #{needsid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from needs
+    where needsid = #{needsid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="atlan.ceer.pojo.NeedsExample">
+    delete from needs
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="atlan.ceer.pojo.Needs">
+    insert into needs (needsid, userid, category, 
+      goodsname, price, tip, 
+      location, createtime, browse, 
+      lever, status, collect, 
+      information)
+    values (#{needsid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, 
+      #{goodsname,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{tip,jdbcType=DOUBLE}, 
+      #{location,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{browse,jdbcType=INTEGER}, 
+      #{lever,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{collect,jdbcType=INTEGER}, 
+      #{information,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="atlan.ceer.pojo.Needs">
+    insert into needs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="needsid != null">
+        needsid,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="category != null">
+        category,
+      </if>
+      <if test="goodsname != null">
+        goodsname,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="tip != null">
+        tip,
+      </if>
+      <if test="location != null">
+        location,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="browse != null">
+        browse,
+      </if>
+      <if test="lever != null">
+        lever,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="collect != null">
+        collect,
+      </if>
+      <if test="information != null">
+        information,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="needsid != null">
+        #{needsid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsname != null">
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="tip != null">
+        #{tip,jdbcType=DOUBLE},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="browse != null">
+        #{browse,jdbcType=INTEGER},
+      </if>
+      <if test="lever != null">
+        #{lever,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="collect != null">
+        #{collect,jdbcType=INTEGER},
+      </if>
+      <if test="information != null">
+        #{information,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="atlan.ceer.pojo.NeedsExample" resultType="java.lang.Long">
+    select count(*) from needs
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update needs
+    <set>
+      <if test="record.needsid != null">
+        needsid = #{record.needsid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null">
+        userid = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.category != null">
+        category = #{record.category,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsname != null">
+        goodsname = #{record.goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=DOUBLE},
+      </if>
+      <if test="record.tip != null">
+        tip = #{record.tip,jdbcType=DOUBLE},
+      </if>
+      <if test="record.location != null">
+        location = #{record.location,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.browse != null">
+        browse = #{record.browse,jdbcType=INTEGER},
+      </if>
+      <if test="record.lever != null">
+        lever = #{record.lever,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.collect != null">
+        collect = #{record.collect,jdbcType=INTEGER},
+      </if>
+      <if test="record.information != null">
+        information = #{record.information,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update needs
+    set needsid = #{record.needsid,jdbcType=VARCHAR},
+      userid = #{record.userid,jdbcType=VARCHAR},
+      category = #{record.category,jdbcType=VARCHAR},
+      goodsname = #{record.goodsname,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DOUBLE},
+      tip = #{record.tip,jdbcType=DOUBLE},
+      location = #{record.location,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      browse = #{record.browse,jdbcType=INTEGER},
+      lever = #{record.lever,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      collect = #{record.collect,jdbcType=INTEGER},
+      information = #{record.information,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update needs
+    set needsid = #{record.needsid,jdbcType=VARCHAR},
+      userid = #{record.userid,jdbcType=VARCHAR},
+      category = #{record.category,jdbcType=VARCHAR},
+      goodsname = #{record.goodsname,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DOUBLE},
+      tip = #{record.tip,jdbcType=DOUBLE},
+      location = #{record.location,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      browse = #{record.browse,jdbcType=INTEGER},
+      lever = #{record.lever,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      collect = #{record.collect,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="atlan.ceer.pojo.Needs">
+    update needs
+    <set>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null">
+        category = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsname != null">
+        goodsname = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="tip != null">
+        tip = #{tip,jdbcType=DOUBLE},
+      </if>
+      <if test="location != null">
+        location = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="browse != null">
+        browse = #{browse,jdbcType=INTEGER},
+      </if>
+      <if test="lever != null">
+        lever = #{lever,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="collect != null">
+        collect = #{collect,jdbcType=INTEGER},
+      </if>
+      <if test="information != null">
+        information = #{information,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where needsid = #{needsid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="atlan.ceer.pojo.Needs">
+    update needs
+    set userid = #{userid,jdbcType=VARCHAR},
+      category = #{category,jdbcType=VARCHAR},
+      goodsname = #{goodsname,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      tip = #{tip,jdbcType=DOUBLE},
+      location = #{location,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      browse = #{browse,jdbcType=INTEGER},
+      lever = #{lever,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      collect = #{collect,jdbcType=INTEGER},
+      information = #{information,jdbcType=LONGVARCHAR}
+    where needsid = #{needsid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="atlan.ceer.pojo.Needs">
+    update needs
+    set userid = #{userid,jdbcType=VARCHAR},
+      category = #{category,jdbcType=VARCHAR},
+      goodsname = #{goodsname,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      tip = #{tip,jdbcType=DOUBLE},
+      location = #{location,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      browse = #{browse,jdbcType=INTEGER},
+      lever = #{lever,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      collect = #{collect,jdbcType=INTEGER}
+    where needsid = #{needsid,jdbcType=VARCHAR}
+  </update>
+</mapper>

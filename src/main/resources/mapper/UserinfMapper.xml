@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="atlan.ceer.mapper.UserinfMapper">
+  <resultMap id="BaseResultMap" type="atlan.ceer.pojo.Userinf">
+    <id column="userid" jdbcType="VARCHAR" property="userid" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="signature" jdbcType="VARCHAR" property="signature" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="school" jdbcType="VARCHAR" property="school" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="atlan.ceer.pojo.UserinfWithBLOBs">
+    <result column="collect" jdbcType="LONGVARCHAR" property="collect" />
+    <result column="publishgoods" jdbcType="LONGVARCHAR" property="publishgoods" />
+    <result column="publishneeds" jdbcType="LONGVARCHAR" property="publishneeds" />
+    <result column="record" jdbcType="LONGVARCHAR" property="record" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    userid, avatar, signature, location, school, birthday, sex, createtime
+  </sql>
+  <sql id="Blob_Column_List">
+    collect, publishgoods, publishneeds, record
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="atlan.ceer.pojo.UserinfExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from userinf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="atlan.ceer.pojo.UserinfExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from userinf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from userinf
+    where userid = #{userid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from userinf
+    where userid = #{userid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="atlan.ceer.pojo.UserinfExample">
+    delete from userinf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="atlan.ceer.pojo.UserinfWithBLOBs">
+    insert into userinf (userid, avatar, signature, 
+      location, school, birthday, 
+      sex, createtime, collect, 
+      publishgoods, publishneeds, record
+      )
+    values (#{userid,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{signature,jdbcType=VARCHAR}, 
+      #{location,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{collect,jdbcType=LONGVARCHAR}, 
+      #{publishgoods,jdbcType=LONGVARCHAR}, #{publishneeds,jdbcType=LONGVARCHAR}, #{record,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="atlan.ceer.pojo.UserinfWithBLOBs">
+    insert into userinf
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="signature != null">
+        signature,
+      </if>
+      <if test="location != null">
+        location,
+      </if>
+      <if test="school != null">
+        school,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="collect != null">
+        collect,
+      </if>
+      <if test="publishgoods != null">
+        publishgoods,
+      </if>
+      <if test="publishneeds != null">
+        publishneeds,
+      </if>
+      <if test="record != null">
+        record,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null">
+        #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null">
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="collect != null">
+        #{collect,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="publishgoods != null">
+        #{publishgoods,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="publishneeds != null">
+        #{publishneeds,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record != null">
+        #{record,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="atlan.ceer.pojo.UserinfExample" resultType="java.lang.Long">
+    select count(*) from userinf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update userinf
+    <set>
+      <if test="record.userid != null">
+        userid = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avatar != null">
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.signature != null">
+        signature = #{record.signature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.location != null">
+        location = #{record.location,jdbcType=VARCHAR},
+      </if>
+      <if test="record.school != null">
+        school = #{record.school,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null">
+        birthday = #{record.birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.collect != null">
+        collect = #{record.collect,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.publishgoods != null">
+        publishgoods = #{record.publishgoods,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.publishneeds != null">
+        publishneeds = #{record.publishneeds,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.record != null">
+        record = #{record.record,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update userinf
+    set userid = #{record.userid,jdbcType=VARCHAR},
+      avatar = #{record.avatar,jdbcType=VARCHAR},
+      signature = #{record.signature,jdbcType=VARCHAR},
+      location = #{record.location,jdbcType=VARCHAR},
+      school = #{record.school,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      collect = #{record.collect,jdbcType=LONGVARCHAR},
+      publishgoods = #{record.publishgoods,jdbcType=LONGVARCHAR},
+      publishneeds = #{record.publishneeds,jdbcType=LONGVARCHAR},
+      record = #{record.record,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update userinf
+    set userid = #{record.userid,jdbcType=VARCHAR},
+      avatar = #{record.avatar,jdbcType=VARCHAR},
+      signature = #{record.signature,jdbcType=VARCHAR},
+      location = #{record.location,jdbcType=VARCHAR},
+      school = #{record.school,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="atlan.ceer.pojo.UserinfWithBLOBs">
+    update userinf
+    <set>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null">
+        signature = #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        location = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null">
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="collect != null">
+        collect = #{collect,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="publishgoods != null">
+        publishgoods = #{publishgoods,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="publishneeds != null">
+        publishneeds = #{publishneeds,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record != null">
+        record = #{record,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where userid = #{userid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="atlan.ceer.pojo.UserinfWithBLOBs">
+    update userinf
+    set avatar = #{avatar,jdbcType=VARCHAR},
+      signature = #{signature,jdbcType=VARCHAR},
+      location = #{location,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      collect = #{collect,jdbcType=LONGVARCHAR},
+      publishgoods = #{publishgoods,jdbcType=LONGVARCHAR},
+      publishneeds = #{publishneeds,jdbcType=LONGVARCHAR},
+      record = #{record,jdbcType=LONGVARCHAR}
+    where userid = #{userid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="atlan.ceer.pojo.Userinf">
+    update userinf
+    set avatar = #{avatar,jdbcType=VARCHAR},
+      signature = #{signature,jdbcType=VARCHAR},
+      location = #{location,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
+    where userid = #{userid,jdbcType=VARCHAR}
+  </update>
+</mapper>

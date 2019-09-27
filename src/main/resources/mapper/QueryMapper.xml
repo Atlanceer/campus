@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="atlan.ceer.mapper.QueryMapper">
+    <select id="queryGoodsList" parameterType="int" resultType="atlan.ceer.model.SimpleGoods">
+        /*select goodses.userid,goodsid,goodsname,goodsinf,price,isnew,mainimage,location,tag,collect,browse,username
+        from goodses
+        left join user on goodses.userid=user.userid*/
+        select goodses.userid,goodsid,goodsname,goodsinf,price,isnew,mainimage,goodses.location,tag,goodses.collect,browse,username,avatar
+        from goodses
+        left join user on goodses.userid=user.userid
+        left join userinf on goodses.userid=userinf.userid
+        <where>
+            <if test="location!=null">and goodses.location=#{location}</if>
+            <if test="tag!=null">and tag=#{tag}</if>
+        </where>
+        ORDER BY goodses.createtime desc
+        limit #{page},20
+    </select>
+    <select id="queryUserInfAll" parameterType="String" resultType="atlan.ceer.model.UserInfAll">
+        select user.userid,avatar,signature,location,user.phone,user.email,user.username,school,birthday,sex,collect,publishgoods,publishneeds,record
+        from userinf
+        left join user on userinf.userid=user.userid
+        where user.userid=#{userid}
+    </select>
+    <select id="queryNeedsInfList" parameterType="hashmap" resultType="atlan.ceer.model.NeedsInf">
+        select needsid,needs.userid,username,avatar,goodsname,information,price,tip,needs.location,needs.collect,browse,needs.createtime,needs.status
+        from needs
+        left join user on needs.userid=user.userid
+        left join userinf on needs.userid=userinf.userid
+        <where>
+            <if test="location!=null">and needs.location=#{location}</if>
+        </where>
+        ORDER BY needs.createtime desc
+        limit #{page},20
+    </select>
+    <select id="queryNeedsInf" parameterType="String" resultType="atlan.ceer.model.NeedsInf">
+        select needsid,needs.userid,username,avatar,goodsname,information,price,tip,needs.location,needs.collect,browse,needs.createtime,needs.status
+        from needs
+        left join user on needs.userid=user.userid
+        left join userinf on needs.userid=userinf.userid
+        where needs.needsid=#{needsid}
+    </select>
+</mapper>
